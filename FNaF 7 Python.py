@@ -204,6 +204,7 @@ class InvisibleButton:
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
     def update(self, mx, my):
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
         if self.rect.collidepoint(mx, my) and pygame.mouse.get_pressed()[0]:
             self.is_clicked = True
         else:
@@ -313,18 +314,22 @@ class Night:
         self.done = False
         self.in_cameras = False
 
+        self.offset_x = float(float(self.RESOLUTION[0]) / 1920.0)
+
+        self.speed_x = 10
+
         self.cam_button = HoverButton(660, 1020, 600, 60, resource_path("assets/cam_button.png"), self.RESOLUTION)
         
         self.office = Panel(0, 0, 1920, 1080, resource_path("assets/office.png"), self.RESOLUTION)
 
         self.office_door = Panel(0, 0, 1920, 1080, resource_path("assets/office_door.png"), self.RESOLUTION)
-        self.office_door_button = InvisibleButton(230,190,190,700, self.RESOLUTION)
+        self.office_door_button = InvisibleButton(360,120,290,820, self.RESOLUTION)
 
         self.office_front_vent = Panel(0, 0, 1920, 1080, resource_path("assets/office_front_vent.png"), self.RESOLUTION)
-        self.office_front_vent_button = InvisibleButton(840, 320, 340, 200, self.RESOLUTION)
+        self.office_front_vent_button = InvisibleButton(1115, 250, 435, 260, self.RESOLUTION)
 
         self.office_right_vent = Panel(0, 0, 1920, 1080, resource_path("assets/office_right_vent.png"), self.RESOLUTION)
-        self.office_right_vent_button = InvisibleButton(1585, 545, 140, 340, self.RESOLUTION)
+        self.office_right_vent_button = InvisibleButton(2060, 560, 150, 400, self.RESOLUTION)
 
 
         self.cam1 = Panel(0, 0, 1920, 1080, resource_path("assets/cam1.png"), self.RESOLUTION)
@@ -373,8 +378,24 @@ class Night:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                        self.done = True
-
             mx, my = pygame.mouse.get_pos()
+
+            if mx < (400 * self.offset_x) and self.office.x < 0 and not self.in_cameras:
+                self.office.x += self.speed_x
+                self.office_door_button.x += self.speed_x
+                self.office_front_vent_button.x += self.speed_x
+                self.office_right_vent_button.x += self.speed_x
+
+            elif mx > (1620 * self.offset_x) and self.office.x > (-580 * self.offset_x) and not self.in_cameras:
+                self.office.x -= self.speed_x
+                self.office_door_button.x -= self.speed_x
+                self.office_front_vent_button.x -= self.speed_x
+                self.office_right_vent_button.x -= self.speed_x
+
+            self.office_door.x = self.office.x
+            self.office_front_vent.x = self.office.x
+            self.office_right_vent.x = self.office.x
+
             self.office_invisible_buttons(mx, my)
 
             self.cam1.set_visible(self.cam_button.get_value())
