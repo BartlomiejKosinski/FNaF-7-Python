@@ -24,7 +24,7 @@ class AnimationObject:
         self.last_tick = pygame.time.get_ticks()
 
     def append_frames(self, resource_path : str):
-        self.frames.append(pygame.transform.scale_by(pygame.image.load(resource_path), (self.scale_x, self.scale_y)))
+        self.frames.append(pygame.transform.scale_by(pygame.image.load(resource_path).convert_alpha(), (self.scale_x, self.scale_y)))
 
     def play(self, screen):
         self.current_tick = pygame.time.get_ticks()
@@ -57,7 +57,7 @@ class HoverButton:
 
         if source is not None:
             try:
-                self.images.append(pygame.transform.scale_by(pygame.image.load(self.source), (self.scale_x, self.scale_y)))
+                self.images.append(pygame.transform.scale_by(pygame.image.load(self.source).convert_alpha(), (self.scale_x, self.scale_y)))
             except:
                 print(f"Something went wrong while adding image using '{source}'")
 
@@ -120,9 +120,9 @@ class Button:
         self.hover_ready = hover_ready
         self.clicked = False
 
-        self.image = pygame.transform.scale_by(pygame.image.load(resource_path(f"{self.source}.png")), (self.scale_x, self.scale_y))
+        self.image = pygame.transform.scale_by(pygame.image.load(resource_path(f"{self.source}.png")).convert_alpha(), (self.scale_x, self.scale_y))
         if self.hover_ready:
-            self.hover_image = pygame.transform.scale_by(pygame.image.load(resource_path(f"{self.source}_hover.png")), (self.scale_x, self.scale_y))
+            self.hover_image = pygame.transform.scale_by(pygame.image.load(resource_path(f"{self.source}_hover.png")).convert_alpha(), (self.scale_x, self.scale_y))
 
         self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
@@ -161,7 +161,7 @@ class Panel:
 
         if source is not None:
             try:
-                self.images.append(pygame.transform.scale_by(pygame.image.load(self.source), (self.scale_x, self.scale_y)))
+                self.images.append(pygame.transform.scale_by(pygame.image.load(self.source).convert_alpha(), (self.scale_x, self.scale_y)))
             except:
                 print(f"Something went wrong while adding image using '{source}'")
 
@@ -240,7 +240,7 @@ class MainMenu:
 
         self.new_game_button = Button(600, 200, 600, 50, resource_path("assets/cam_button"), False, self.RESOLUTION)
 
-        self.static = AnimationObject(0, 0, 20, self.RESOLUTION)
+        self.static = AnimationObject(0, 0, 100, self.RESOLUTION)
         self.static.append_frames(resource_path("assets/static.png"))
         self.static.append_frames(resource_path("assets/static2.png"))
         self.static.append_frames(resource_path("assets/static3.png"))
@@ -249,11 +249,11 @@ class MainMenu:
 
         self.main_menu_background = Panel(0, 0, 1920, 1080, resource_path("assets/main_menu_background.png"), self.RESOLUTION)
 
-        self.new_game_button = Button(50, 400, 581, 111, resource_path("assets/new_game"), True, self.RESOLUTION)
-        self.continue_button = Button(50, 520, 581, 111, resource_path("assets/continue"), True, self.RESOLUTION)
-        self.custom_night_button = Button(50, 640, 581, 111, resource_path("assets/custom_night"), True, self.RESOLUTION)
-        self.extras_button = Button(50, 760, 581, 111, resource_path("assets/extras"), True, self.RESOLUTION)
-        self.exit_button = Button(50, 950, 581, 111, resource_path("assets/exit"), True, self.RESOLUTION)
+        self.new_game_button = Button(30, 400, 581, 111, resource_path("assets/new_game"), True, self.RESOLUTION)
+        self.continue_button = Button(30, 520, 581, 111, resource_path("assets/continue"), True, self.RESOLUTION)
+        self.custom_night_button = Button(30, 640, 581, 111, resource_path("assets/custom_night"), True, self.RESOLUTION)
+        self.extras_button = Button(30, 760, 581, 111, resource_path("assets/extras"), True, self.RESOLUTION)
+        self.exit_button = Button(30, 950, 581, 111, resource_path("assets/exit"), True, self.RESOLUTION)
 
 
         self.update()
