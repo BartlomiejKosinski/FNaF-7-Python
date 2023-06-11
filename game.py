@@ -1,5 +1,12 @@
 import pygame
+import os
+import sys
 
+pygame.init()
+
+def resource_path(relative_path):
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 
 class HoverButton:
     def __init__(self, x : int, y : int, width : int, height : int, source : str = None) -> None:
@@ -138,24 +145,26 @@ class Game:
     def __init__(self) -> None:
         self.RESOLUTION = (1920, 1080)
         self.screen = pygame.display.set_mode(self.RESOLUTION, pygame.FULLSCREEN)
-        pygame.display.set_caption("Fnaf Python")
+        pygame.display.set_caption("FNaF 7 Python")
+        self.icon = pygame.image.load(resource_path('assets/icon.png'))
+        pygame.display.set_icon(self.icon)
 
-        self.cam_button = HoverButton(660, 1020, 600, 60, "assets/cam_button.png")
+        self.cam_button = HoverButton(660, 1020, 600, 60, resource_path("assets/cam_button.png"))
         self.done = False
 
-        self.office = Panel(0, 0, 1920, 1080, "assets/office.png")
+        self.office = Panel(0, 0, 1920, 1080, resource_path("assets/office.png"))
 
-        self.office_door = Panel(0, 0, 1920, 1080, "assets/office_door.png")
+        self.office_door = Panel(0, 0, 1920, 1080, resource_path("assets/office_door.png"))
         self.office_door_button = InvisibleButton(230,190,190,700)
 
-        self.office_front_vent = Panel(0, 0, 1920, 1080, "assets/office_front_vent.png")
+        self.office_front_vent = Panel(0, 0, 1920, 1080, resource_path("assets/office_front_vent.png"))
         self.office_front_vent_button = InvisibleButton(840, 320, 340, 200)
 
-        self.office_right_vent = Panel(0, 0, 1920, 1080, "assets/office_right_vent.png")
+        self.office_right_vent = Panel(0, 0, 1920, 1080, resource_path("assets/office_right_vent.png"))
         self.office_right_vent_button = InvisibleButton(1585, 545, 140, 340)
 
 
-        self.panel = Panel(0, 0, 1920, 1080, "assets/cam1.png")
+        self.panel = Panel(0, 0, 1920, 1080, resource_path("assets/cam1.png"))
 
         self.office_door.set_visible(False)
         self.office_front_vent.set_visible(False)
