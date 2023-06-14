@@ -1,8 +1,1 @@
-{
-    "resolution": [
-        {
-            "WIDTH": 1920,
-            "HEIGHT": 1080
-        }
-    ]
-}
+{"options": [{"WIDTH": 1920, "HEIGHT": 1080}, {"FULLSCREEN": 1}, {"VOLUME": 0.20000000000000015}]}
